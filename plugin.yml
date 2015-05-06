@@ -1,0 +1,6 @@
+main: me.timlampen.bargamble.Main
+version: 1.0
+name: BarGamble
+author: TimLampen
+commands:
+  bar:

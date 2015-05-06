@@ -1,0 +1,42 @@
+success: '&6You have held down your drink and earned &a&l %money%'
+#Use %reward% to represent the amount of money won
+
+error: '&4An error has occured with this purchase.'
+
+nospace: '&7You have noo free space in your inventory'
+
+nomoney: '&6You cannot afford to purchase this drink'
+
+cooldown: '&4You have to drink your current potion before getting another'
+
+lose: '&7You feel a little dizzy'
+
+buy: '&6&lYou have purchased &r%name% &6&lfor &a&l$%amt%'
+#Use %name% to represent the name of the purchased item
+#Use %amt% for how much the item cost'd
+
+noperm: '&4You do not have permission to perform this command'
+
+syntaxerror: '&aIncorrect format, either /bar or /bar reload'
+
+
+
+inventories:
+  test:
+    inv:
+      name: '&atest bar'
+      rows: 2
+      perm: 'bar.test'
+    items:
+      1:
+        price: 100
+        reward: 1000
+        chance: 80
+        name: '&&rCocaine'
+        info:
+        - 'I like cheese'
+        - 'You must too'
+        wineffect: 'heart'
+        loseeffect: 'largeexplode'
+
+
