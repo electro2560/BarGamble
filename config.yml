@@ -8,6 +8,7 @@ nospace: '&7You have noo free space in your inventory'
 nomoney: '&6You cannot afford to purchase this drink'
 
 cooldown: '&4You have to drink your current potion before getting another'
+#
 
 nobar: '&4There is no inventory with the desired name'
 

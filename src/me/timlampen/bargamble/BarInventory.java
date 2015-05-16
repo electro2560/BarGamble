@@ -31,7 +31,7 @@ public class BarInventory {
 		config = p.getConfig();
 		load();
 	}
-	
+	//.
 	public void load(){
 		Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + filename);
 		size = config.getInt("inventories." + filename + ".inv.rows")*9;

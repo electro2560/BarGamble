@@ -50,7 +50,7 @@ public class Main extends JavaPlugin{
 		}
 		return economy != null;
 	}
-  
+  //.
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args){
 		if((sender instanceof Player)){
