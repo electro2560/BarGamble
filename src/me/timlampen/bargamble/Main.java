@@ -38,12 +38,8 @@ public class Main extends JavaPlugin{
 		}
 		getServer().getPluginManager().registerEvents(new EventListener(this), this);
 		for(String s : getConfig().getConfigurationSection("inventories").getKeys(false)){
-			if(!s.equals(s.toLowerCase())){
-				getConfig().set("inventories." + s, s.toLowerCase());
-			}
-			s = s.toLowerCase();
 			filenames.add(s);
-			BarInventory bi = new BarInventory(this);
+			BarInventory bi = new BarInventory(this, s);
     	}
 	}
   
@@ -63,7 +59,10 @@ public class Main extends JavaPlugin{
 				if(args.length==1 && !args[0].contains("config") && !args[0].contains("list") && !args[0].contains("reload")){
 					if(!player.getInventory().contains(Material.POTION)){
 					String s = args[0];
-					s = s.toLowerCase();
+					if(invs.containsKey(args[0])){
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("nobar")));
+						return false;
+					}
 					if(player.hasPermission(getConfig().getString("inventories." + s.replace(".yml", "") + ".inv.perm"))){
 						invs.get(args[0]).construct(player);
 					}
@@ -81,7 +80,6 @@ public class Main extends JavaPlugin{
 				else if(args[0].equalsIgnoreCase("list")){
 					for(String s : filenames){
 						s = s.replace(".yml", "");
-						s = s.toLowerCase();
 						player.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.GREEN + s);
 					}
 				}
@@ -91,7 +89,7 @@ public class Main extends JavaPlugin{
 					    for(String s : getConfig().getConfigurationSection("inventories").getKeys(false)){
 					    	s = s.toLowerCase();
 					    	filenames.add(s);
-					    	BarInventory bi = new BarInventory(this);
+					    	BarInventory bi = new BarInventory(this, s);
 					    	}
 						player.sendMessage(ChatColor.GREEN + "BarGamble Config Reloaded");
 					}
@@ -113,9 +111,8 @@ public class Main extends JavaPlugin{
 					invs.clear();
 					invname.clear();
 				    for(String s : getConfig().getConfigurationSection("inventories").getKeys(false)){
-				    	s = s.toLowerCase();
 				    	filenames.add(s);
-				    	BarInventory bi = new BarInventory(this);
+				    	BarInventory bi = new BarInventory(this, s);
 				    	}
 					sender.sendMessage("Config reloaded");
 				}

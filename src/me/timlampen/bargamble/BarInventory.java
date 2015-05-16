@@ -25,13 +25,15 @@ public class BarInventory {
 	String filename;
 	FileConfiguration config;
 	int size;
-	public BarInventory(Main p){
+	public BarInventory(Main p, String filename){
 		this.p = p;
+		this.filename = filename;
 		config = p.getConfig();
 		load();
 	}
 	
 	public void load(){
+		Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + filename);
 		size = config.getInt("inventories." + filename + ".inv.rows")*9;
 		title = ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename + ".inv.name"));
 		for(String s : config.getConfigurationSection("inventories." + filename + ".items").getKeys(false)){
@@ -43,9 +45,9 @@ public class BarInventory {
 			ItemMeta im = is.getItemMeta();
 			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename + ".items." + s + ".name")));
 			ArrayList<String> lore = new ArrayList<>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + "cost-lore")).replace("%buymoney%", convertMoney(cost)));
-			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + "chance-lore")).replace("%chance%", chance + ""));
-			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + "reward-lore")).replace("%winmoney%", convertMoney(reward)));
+			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + ".items." + s + ".cost-lore")).replace("%buymoney%", convertMoney(cost)));
+			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + ".items." + s + ".chance-lore")).replace("%chance%", chance + ""));
+			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + ".items." + s + ".reward-lore")).replace("%winmoney%", convertMoney(reward)));
 			for(String str : config.getStringList("inventories." + filename + ".items." + s + ".info")){
 				lore.add(ChatColor.translateAlternateColorCodes('&', str));
 			}
