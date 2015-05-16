@@ -38,8 +38,12 @@ public class Main extends JavaPlugin{
 		}
 		getServer().getPluginManager().registerEvents(new EventListener(this), this);
 		for(String s : getConfig().getConfigurationSection("inventories").getKeys(false)){
+			if(!s.equals(s.toLowerCase())){
+				getConfig().set("inventories." + s, s.toLowerCase());
+			}
+			s = s.toLowerCase();
 			filenames.add(s);
-			BarInventory bi = new BarInventory(this, s);
+			BarInventory bi = new BarInventory(this);
     	}
 	}
   
@@ -85,8 +89,9 @@ public class Main extends JavaPlugin{
 					if(player.hasPermission("bar.reload")){
 						reloadConfig();
 					    for(String s : getConfig().getConfigurationSection("inventories").getKeys(false)){
+					    	s = s.toLowerCase();
 					    	filenames.add(s);
-					    	BarInventory bi = new BarInventory(this, s);
+					    	BarInventory bi = new BarInventory(this);
 					    	}
 						player.sendMessage(ChatColor.GREEN + "BarGamble Config Reloaded");
 					}
@@ -108,8 +113,9 @@ public class Main extends JavaPlugin{
 					invs.clear();
 					invname.clear();
 				    for(String s : getConfig().getConfigurationSection("inventories").getKeys(false)){
+				    	s = s.toLowerCase();
 				    	filenames.add(s);
-				    	BarInventory bi = new BarInventory(this, s);
+				    	BarInventory bi = new BarInventory(this);
 				    	}
 					sender.sendMessage("Config reloaded");
 				}

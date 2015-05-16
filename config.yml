@@ -30,8 +30,11 @@ inventories:
     items:
       1:
         price: 100
+        cost-lore: "This costs %buymoney%"
         reward: 1000
+        reward-lore: "bblaw blaw %winmoney% blaw"
         chance: 80
+        chance-lore: "You can win %chance%"
         name: '&&rCocaine'
         info:
         - 'I like cheese'

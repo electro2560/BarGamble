@@ -25,9 +25,7 @@ public class BarInventory {
 	String filename;
 	FileConfiguration config;
 	int size;
-	public BarInventory(Main p, String filename){
-		filename = filename.replace(".yml", "");
-		this.filename = filename;
+	public BarInventory(Main p){
 		this.p = p;
 		config = p.getConfig();
 		load();
@@ -45,9 +43,9 @@ public class BarInventory {
 			ItemMeta im = is.getItemMeta();
 			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename + ".items." + s + ".name")));
 			ArrayList<String> lore = new ArrayList<>();
-			lore.add(ChatColor.GREEN + "Buy: $" + convertMoney(cost));
-			lore.add(ChatColor.DARK_AQUA + "Chance of winning: " + chance + "/100");
-			lore.add(ChatColor.DARK_AQUA + "Potential win: $" + convertMoney(reward));
+			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + "cost-lore")).replace("%buymoney%", convertMoney(cost)));
+			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + "chance-lore")).replace("%chance%", chance + ""));
+			lore.add(ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename  + "reward-lore")).replace("%winmoney%", convertMoney(reward)));
 			for(String str : config.getStringList("inventories." + filename + ".items." + s + ".info")){
 				lore.add(ChatColor.translateAlternateColorCodes('&', str));
 			}
