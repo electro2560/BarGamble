@@ -50,7 +50,7 @@ public class Main extends JavaPlugin{
 		}
 		return economy != null;
 	}
-  //.
+  
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args){
 		if((sender instanceof Player)){
@@ -59,7 +59,7 @@ public class Main extends JavaPlugin{
 				if(args.length==1 && !args[0].contains("config") && !args[0].contains("list") && !args[0].contains("reload")){
 					if(!player.getInventory().contains(Material.POTION)){
 					String s = args[0];
-					if(invs.containsKey(args[0])){
+					if(!invs.containsKey(s)){
 						player.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("nobar")));
 						return false;
 					}
@@ -80,6 +80,7 @@ public class Main extends JavaPlugin{
 				else if(args[0].equalsIgnoreCase("list")){
 					for(String s : filenames){
 						s = s.replace(".yml", "");
+						s = s.toLowerCase();
 						player.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.GREEN + s);
 					}
 				}
@@ -87,7 +88,6 @@ public class Main extends JavaPlugin{
 					if(player.hasPermission("bar.reload")){
 						reloadConfig();
 					    for(String s : getConfig().getConfigurationSection("inventories").getKeys(false)){
-					    	s = s.toLowerCase();
 					    	filenames.add(s);
 					    	BarInventory bi = new BarInventory(this, s);
 					    	}
