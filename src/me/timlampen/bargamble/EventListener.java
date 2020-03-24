@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -79,7 +80,7 @@ public class EventListener implements Listener{
 		Player player = (Player)event.getWhoClicked();
 		if(event.getCurrentItem()!=null && event.getClickedInventory()!=null && event.getCurrentItem().hasItemMeta()){
 			for(String s : plugin.invname.keySet()){
-				if(event.getClickedInventory().getName().equals(s)){
+				if(event.getView().getTitle().equals(s)){
 					BarInventory inv = plugin.invname.get(s);
 					event.setCancelled(true);
 					if(player.getInventory().firstEmpty()==-1){
@@ -122,10 +123,19 @@ public class EventListener implements Listener{
 						int y = ran.nextInt(3)+player.getLocation().getBlockY();
 						int z = ran.nextInt(3)+player.getLocation().getBlockZ();
 						if(!win){
-								player.getWorld().playEffect(new Location(player.getWorld(), x, y, z), Effect.getByName(inv.loseeffect.get(item)), 2004);
+							//Particle.valueOf(inv.loseeffect.get(item).toUpperCase());
+							//Particle.VILLAGER_ANGRY;
+							//Particle.VILLAGER_HAPPY;
+							
+							
+							player.spawnParticle(Particle.valueOf(inv.loseeffect.get(item).toUpperCase()), new Location(player.getWorld(), x, y, z), (int) 1);
+							
+							
+								//player.getWorld().playEffect(new Location(player.getWorld(), x, y, z), Particle.valueOf(inv.loseeffect.get(item).toUpperCase()), (int) 2004);
 						}
 						else{
-							player.getWorld().playEffect(new Location(player.getWorld(), x, y, z), Effect.getByName(inv.wineffect.get(item)), 2004);
+							player.spawnParticle(Particle.valueOf(inv.wineffect.get(item).toUpperCase()), new Location(player.getWorld(), x, y, z), (int) 1);
+							//player.getWorld().playEffect(new Location(player.getWorld(), x, y, z), Effect.getByName(inv.wineffect.get(item)), 2004);
 						}
 					}
 					runnable(player, win, inv, item);
@@ -137,10 +147,10 @@ public class EventListener implements Listener{
 						int y = ran.nextInt(3)+player.getLocation().getBlockY();
 						int z = ran.nextInt(3)+player.getLocation().getBlockZ();
 						if(!win){
-								player.getWorld().playEffect(new Location(player.getWorld(), x, y, z), Effect.getByName(inv.loseeffect.get(item)), 2004);
+							player.spawnParticle(Particle.valueOf(inv.loseeffect.get(item).toUpperCase()), new Location(player.getWorld(), x, y, z), (int) 1);
 						}
 						else{
-							player.getWorld().playEffect(new Location(player.getWorld(), x, y, z), Effect.getByName(inv.wineffect.get(item)), 2004);
+							player.spawnParticle(Particle.valueOf(inv.wineffect.get(item).toUpperCase()), new Location(player.getWorld(), x, y, z), (int) 1);
 						}
 					}
 					runnable(player, win, inv, item);

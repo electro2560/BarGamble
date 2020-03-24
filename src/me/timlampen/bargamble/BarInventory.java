@@ -32,7 +32,7 @@ public class BarInventory {
 		load();
 	}
 	//.
-	public void load(){
+	/*public void load(){
 		Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + filename);
 		size = config.getInt("inventories." + filename + ".inv.rows")*9;
 		title = ChatColor.translateAlternateColorCodes('&', config.getString("inventories." + filename + ".inv.name"));
@@ -63,7 +63,39 @@ public class BarInventory {
 		}
 		p.invs.put(filename, this);
 		p.invname.put(title, this);
-	}
+	}*/
+	
+	 public void load() {
+		    this.size = this.config.getInt("inventories." + this.filename + ".inv.rows") * 9;
+		    this.title = ChatColor.translateAlternateColorCodes('&', this.config.getString("inventories." + this.filename + ".inv.name"));
+		    for (String s : this.config.getConfigurationSection("inventories." + this.filename + ".items").getKeys(false)) {
+		      int slot = Integer.parseInt(s);
+		      int cost = this.config.getInt("inventories." + this.filename + ".items." + s + ".price");
+		      int reward = this.config.getInt("inventories." + this.filename + ".items." + s + ".reward");
+		      int chance = this.config.getInt("inventories." + this.filename + ".items." + s + ".chance");
+		      ItemStack is = new ItemStack(Material.POTION);
+		      ItemMeta im = is.getItemMeta();
+		      im.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.config.getString("inventories." + this.filename + ".items." + s + ".name")));
+		      ArrayList<String> lore = new ArrayList<String>();
+		      lore.add(ChatColor.GREEN + "Buy: $" + convertMoney(cost));
+		      lore.add(ChatColor.DARK_AQUA + "Chance of winning: " + chance + "/100");
+		      lore.add(ChatColor.DARK_AQUA + "Potential win: $" + convertMoney(reward));
+		      for (String str : this.config.getStringList("inventories." + this.filename + ".items." + s + ".info")) {
+		        lore.add(ChatColor.translateAlternateColorCodes('&', str));
+		      }
+		      lore.add("From shop: " + this.filename);
+		      im.setLore(lore);
+		      is.setItemMeta(im);
+		      this.items.put(Integer.valueOf(slot), is);
+		      this.prices.put(is, Integer.valueOf(cost));
+		      this.chances.put(is, Integer.valueOf(chance));
+		      this.rewards.put(is, Integer.valueOf(reward));
+		      this.loseeffect.put(is, this.config.getString("inventories." + this.filename + ".items." + s + ".loseeffect"));
+		      this.wineffect.put(is, this.config.getString("inventories." + this.filename + ".items." + s + ".wineffect"));
+		    } 
+		    this.p.invs.put(this.filename, this);
+		    this.p.invname.put(this.title, this);
+		  }
 	
 	public void construct(Player player){
 		Inventory inv = Bukkit.createInventory(player, size, title);
